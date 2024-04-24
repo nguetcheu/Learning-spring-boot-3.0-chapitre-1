@@ -11,3 +11,8 @@ Leveraging templates to create content 31
  <li>{{name}}</li>
  {{/videos}}
 </ul>
+
+<form action="/new-video" method="POST">
+    <input type="text" name="name">
+    <button type="submit">Submit</button>
+</form>

@@ -1,26 +1,28 @@
 package com.learning.spring.boot3.chapitre1.Controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.learning.spring.boot3.chapitre1.Video;
+import com.learning.spring.boot3.chapitre1.VideoService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class HomeController {
 
-    record Video(String name) {}
+    private  VideoService videoService;
 
-    List<Video> videos = List.of(
-            new Video("Need HELP with your SPRING BOOT 3 App?"),
-            new Video("Don't do THIS to your own CODE!"),
-            new Video("SECRETS to fix BROKEN CODE!")
-    );
+    public HomeController(VideoService videoService) {
+        this.videoService = videoService;
+    }
 
-    @GetMapping("/")
-    public String index(Model model){
-        model.addAttribute("videos", videos);
-        return "index";
+    @GetMapping("/api/videos")
+    public List<Video> all(){
+        return videoService.getVideos();
+    }
+
+    @PostMapping("/new-video")
+    public Video newVideo(@RequestBody Video video) {
+        return videoService.create(video);
     }
 
 }
